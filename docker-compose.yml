@@ -1,16 +1,19 @@
 version: '3'
-services:
-  web:
-    build: ./services/users
-    ports:
-    - 5000:5000
-    volumes:
-    - ./services/feed:/usr/src/app
-    links:
-    - redis
 
-  redis:
-    image: redis
+services:
+  backend:
+    build: ./services/backend
+    ports:
+      - 5000
+    volumes:
+      - ./services/feed:/usr/src/app
+    depends_on:
+      - mongo
+
+  crawler:
+    build: ./services/crawler
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:latest
@@ -18,7 +21,7 @@ services:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
-      - mongo:/data/db
-    command: mongod --smallfiles --logpath=/dev/null # --quiet
+      - ./data/db:/data/db
     ports:
-      - 27017:27017
+      - 27017
+    command: mongod --smallfiles --logpath=/dev/null 
