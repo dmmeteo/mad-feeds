@@ -112,3 +112,8 @@ venv.bak/
 
 
 # End of https://www.gitignore.io/api/python
+
+
+# database
+*.db
+db-data/

@@ -2,23 +2,23 @@
 import scrapy
 
 
-class MiaFeedSpider(scrapy.Spider):
-    name = 'mia_feed'
+class MiaHTMLSpider(scrapy.Spider):
+    name = 'mia_html'
     allowed_domains = ['miabellebaby.com']
 
-    url = 'https://www.miabellebaby.com/a/feed/v2/facebook.rss?limit=50&page=%s'
-    page = 1
-
     def start_requests(self):
-        yield scrapy.Request(self.url % self.page, self.parse)
+        # TODO select urls from mongodb/redis
+        urls = ['']
+        for url in urls:
+            yield scrapy.Request(url, self.parse)
 
     def parse(self, response):
+        # TODO yield meta tags
         if response.css('item'):
             for quote in response.css('item'):
                 yield {
                     'id': quote.css('g\:id::text').extract_first(),
                     'title': quote.css('g\:title::text').extract_first(),
-                    'url': quote.css('g\:link::text').extract_first(),
                 }
 
             self.page += 1
