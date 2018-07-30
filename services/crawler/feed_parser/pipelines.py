@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pymongo
-#from scrapy.exceptions import DropItem ## use for checks later
+from scrapy.exceptions import DropItem ## use for checks later
 
 class MongoPipeline(object):
 

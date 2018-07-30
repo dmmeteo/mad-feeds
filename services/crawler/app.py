@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
-from datetime import date
-from scrapy.utils.project import get_project_settings
-from scrapy.crawler import CrawlerProcess
+import scrapy
+from twisted.internet import reactor, defer
+from scrapy.crawler import CrawlerRunner
+from scrapy.utils.log import configure_logging
 from feed_parser.spiders import MiaFeedSpider, MiaHTMLSpider
 
+
+configure_logging()
+runner = CrawlerRunner()
+
+@defer.inlineCallbacks
+def crawl():
+    yield runner.crawl(MiaFeedSpider)
+    yield runner.crawl(MiaHTMLSpider)
+    reactor.stop()
+
+
 if __name__ == '__main__':
-    # only run on saturdays (once a week)
-    # if date.strftime(date.today(), '%A').lower() == 'saturday':
-    process = CrawlerProcess(get_project_settings())
-
-    # at first run MiaFeed
-    process.crawl(MiaFeedSpider)
-    process.start()
-
-    # at second run MiaHTML
-    process.crawl(MiaHTMLSpider)
-    process.start() # the script will block here until the crawling is finished
+    crawl()
+    reactor.run()
