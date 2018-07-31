@@ -10,7 +10,10 @@ class MiaFeedSpider(scrapy.Spider):
     page = 1
 
     def start_requests(self):
+        # TODO normal prerequest
+        response = scrapy.Request(url)
         yield scrapy.Request(self.url % self.page, self.parse)
+
 
     def parse(self, response):
         if response.css('item'):
