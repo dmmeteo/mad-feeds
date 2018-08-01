@@ -6,26 +6,25 @@ class MiaFeedSpider(scrapy.Spider):
     name = 'mia_feed'
     allowed_domains = ['miabellebaby.com']
 
-    url = 'https://www.miabellebaby.com/a/feed/v2/facebook.rss?limit=50&page=%s'
-    page = 1
-
-    def start_requests(self):
-        # TODO normal prerequest
-        response = scrapy.Request(url)
-        yield scrapy.Request(self.url % self.page, self.parse)
-
+    def __init__(self):
+        self.url = 'https://www.miabellebaby.com/a/feed/v2/facebook.rss?limit=50&page=%s'
+        self.start_urls = [self.url % 1]
 
     def parse(self, response):
-        if response.css('item'):
-            for quote in response.css('item'):
-                yield {
-                    'id': quote.css('g\:id::text').extract_first(),
-                    'title': quote.css('g\:title::text').extract_first(),
-                    'url': quote.css('g\:link::text').extract_first(),
-                }
+        pages = ''
+        data = response.xpath('//comment()').extract()
+        for d in data:
+            if '<!-- Page: 1 of ' in d:
+                pages = d.replace('<!-- Page: 1 of ', '')
+                pages = pages.replace(' -->', '')
 
-            self.page += 1
-            next_page = self.url % self.page
+        for next_page in range(1, int(pages)+1):
+            yield response.follow(self.url % next_page, self.parse_item)
 
-            if next_page is not None:
-                yield response.follow(next_page, self.parse)
+    def parse_item(self, response):
+        for r in response.css('item'):
+            yield {
+                'id': r.css('g\:id::text').extract_first(),
+                'title': r.css('g\:title::text').extract_first(),
+                'url': r.css('g\:link::text').extract_first(),
+            }

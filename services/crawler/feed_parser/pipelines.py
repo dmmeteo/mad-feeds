@@ -31,6 +31,6 @@ class MongoPipeline(object):
 
     def process_item(self, item, spider):
         ## how to handle each post
-        if spider.nema == 'mia_feed':
+        if spider.name == 'mia_feed':
             self.db[self.collection_name].insert_one(dict(item))
-            return item
+        return item

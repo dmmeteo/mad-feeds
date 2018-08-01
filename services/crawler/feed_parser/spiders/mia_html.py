@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import pymongo
 
 
 class MiaHTMLSpider(scrapy.Spider):
@@ -7,22 +8,20 @@ class MiaHTMLSpider(scrapy.Spider):
     allowed_domains = ['miabellebaby.com']
 
     def start_requests(self):
-        # TODO select urls from mongodb/redis
-        urls = ['']
-        for url in urls:
-            yield scrapy.Request(url, self.parse)
+        '''Get urls from mongodb'''
+        mongo_db = self.settings.get('MONGO_DATABASE')
+        mongo_uri = self.settings.get('MONGO_URI')
+        client = pymongo.MongoClient(mongo_uri)
+        db = client[mongo_db]
+
+        for product in db['Product'].find():
+            url = product.get('url')
+            if url:
+                yield scrapy.Request(url, self.parse)
 
     def parse(self, response):
-        # TODO yield meta tags
-        if response.css('item'):
-            for quote in response.css('item'):
-                yield {
-                    'id': quote.css('g\:id::text').extract_first(),
-                    'title': quote.css('g\:title::text').extract_first(),
-                }
-
-            self.page += 1
-            next_page = self.url % self.page
-
-            if next_page is not None:
-                yield response.follow(next_page, self.parse)
+        for quote in response.css('item'):
+            print(quote.xpath('//meta/@content').extract_first())
+            yield {
+                'title': quote.xpath('//meta[contains(@property, "title")]/@content').extract_first()
+            }
