@@ -26,5 +26,5 @@ class MiaFeedSpider(scrapy.Spider):
             yield {
                 'id': r.css('g\:id::text').extract_first(),
                 'title': r.css('g\:title::text').extract_first(),
-                'url': r.css('g\:link::text').extract_first(),
+                'url': r.css('g\:link::text').extract_first()
             }
