@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.spiders import XMLFeedSpider
-from scrapy.http import FormRequest
-from feed_parser.items import ProductItem
+from feed_parser.items import ProductFeedItem
+
 
 class MiaFeedSpider(XMLFeedSpider):
     name = 'mia_feed'
@@ -31,10 +31,11 @@ class MiaFeedSpider(XMLFeedSpider):
         return self.parse_nodes(response, nodes)
 
     def parse_node(self, response, node):
-        item = ProductItem()
+        item = ProductFeedItem()
+        for key in item.fields.keys():
+            item[key] = node.xpath('//g:%s/text()' % key).extract_first()
+
         item['product_id'] = node.xpath('//g:id/text()').extract_first()
-        item['title'] = node.xpath('//g:title/text()').extract_first()
-        item['description'] = node.xpath('//g:description/text()').extract_first()
         return item
 
 

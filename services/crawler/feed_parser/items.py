@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-class ProductItem(scrapy.Item):
+class ProductFeedItem(scrapy.Item):
     '''
     Defining the storage containers for the data we
     plan to scrape
@@ -9,35 +9,40 @@ class ProductItem(scrapy.Item):
     product_id = scrapy.Field()
     title = scrapy.Field()
     description = scrapy.Field()
-    # color
-    # size
-    # pattern
-    # material
-    # gender
+    link = scrapy.Field()
+    image_link = scrapy.Field()
+    color = scrapy.Field()
+    size = scrapy.Field()
+    pattern = scrapy.Field()
+    material = scrapy.Field()
 
-    # # Other Shopify fields
-    # product_type
-    # brand
-    # gtin
-    # mpn
-    # price
-    # google_product_category
+    # #Other Shopify fields
+    product_type = scrapy.Field()
+    brand = scrapy.Field()
+    gtin = scrapy.Field()
+    mpn = scrapy.Field()
+    price = scrapy.Field()
+    google_product_category = scrapy.Field()
 
-    # compare_at_price
-    # sale_price
-    # tags
+    compare_at_price = scrapy.Field()
+    sale_price = scrapy.Field()
+    tags = scrapy.Field()
 
     # #Facebook fields
-    # labels
-    # availability
-    # condition
-    # item_group_id
-    # shipping_weight
+    labels = scrapy.Field()
+    availability = scrapy.Field()
+    condition = scrapy.Field()
+    item_group_id = scrapy.Field()
+    shipping_weight = scrapy.Field()
 
     # #Google fields
-    # google_product_category
-    # custom labels
-    # age group
-    # condition
-    # gender
+    google_product_category = scrapy.Field()
+    custom_label_0 = scrapy.Field()
+    custom_label_1 = scrapy.Field()
+    custom_label_2 = scrapy.Field()
+    custom_label_3 = scrapy.Field()
+    custom_label_4 = scrapy.Field()
+    age_group = scrapy.Field()
+    condition = scrapy.Field()
+    gender = scrapy.Field()
 
