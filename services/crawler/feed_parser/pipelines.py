@@ -30,7 +30,8 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        ## how to handle each post
+        # how to handle each post
+        # TODO insert items locale data in locale-fields (en, il, ru)
         if spider.name == 'mia_feed':
             self.db[self.collection_name].update({'product_id': item['product_id']}, dict(item), upsert=True)
         return item

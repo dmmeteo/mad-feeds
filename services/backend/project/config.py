@@ -4,6 +4,7 @@ import os
 
 class BaseConfig:
     """Base configuration"""
+    SECRET_KEY = os.environ.get("SECRET_KEY")
     TESTING = False
     MONGODB_HOST = 'mongo'
     MONGODB_PORT = 27017
