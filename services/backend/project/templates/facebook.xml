@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+   <channel>
+      <title>Mia Belle Baby</title>
+      <link>https://www.miabellebaby.com</link>
+
+      <!-- Premium: true -->
+      <!-- Collection: all -->
+      <!-- Total product count: 3404 -->
+      <!-- Products per page: 1 -->
+      <!-- Page: 1 of 3404 -->
+
+      {% for item in obj %}
+         <item>
+            {% for key, value in item.items() %}
+                <g:{{ key|e }}>{{ value|e }}</g:{{ key|e}}>
+            {% endfor %}
+         </item>
+      {% endfor %}
+   </channel>
+</rss>

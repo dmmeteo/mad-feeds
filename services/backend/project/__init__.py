@@ -24,7 +24,7 @@ def create_app():
 
     # Hook up resources and the API extension.
     from .app.v1.resources import FacebookProductFeed
-    api.add_resource(FacebookProductFeed, '/v1/facebook_rss/<string:entry>')
+    api.add_resource(FacebookProductFeed, '/v1/facebook_rss/')
 
     api.init_app(app)
     return app

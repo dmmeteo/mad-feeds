@@ -15,15 +15,14 @@ class ProductFeedItem(scrapy.Item):
     size = scrapy.Field()
     pattern = scrapy.Field()
     material = scrapy.Field()
+    gender = scrapy.Field()
 
-    # #Other Shopify fields
+    # #Shopify fields
     product_type = scrapy.Field()
     brand = scrapy.Field()
     gtin = scrapy.Field()
     mpn = scrapy.Field()
     price = scrapy.Field()
-    google_product_category = scrapy.Field()
-
     compare_at_price = scrapy.Field()
     sale_price = scrapy.Field()
     tags = scrapy.Field()
@@ -43,6 +42,4 @@ class ProductFeedItem(scrapy.Item):
     custom_label_3 = scrapy.Field()
     custom_label_4 = scrapy.Field()
     age_group = scrapy.Field()
-    condition = scrapy.Field()
-    gender = scrapy.Field()
 
