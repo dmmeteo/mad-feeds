@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
+
 class ProductFeedItem(scrapy.Item):
     '''
     Defining the storage containers for the data we
