@@ -70,8 +70,8 @@ ITEM_PIPELINES = {
 }
 
 ## get mongodb params
-# MONGO_URI = 'mongodb://mongo:27017/'
-MONGO_URI = 'mongodb://127.0.0.1:27017/'
+MONGO_HOST = os.environ.get('DATABASE_HOST')
+MONGO_PORT = os.environ.get('DATABASE_PORT')
 MONGO_DATABASE = os.environ.get('DATABASE_NAME')
 
 # Enable and configure the AutoThrottle extension (disabled by default)

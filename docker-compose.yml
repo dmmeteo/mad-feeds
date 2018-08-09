@@ -1,31 +1,56 @@
 version: '3'
 
+volumes:
+  mongo_local: {}
+
 services:
-  backend:
-    build: ./services/backend
-    ports:
-      - 5000
-    volumes:
-      - ./services/backend:/usr/src/app
-    depends_on:
-      - mongo
 
   crawler:
+    container_name: crawler
     build: ./services/crawler
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
     volumes:
-      - ./services/crawler:/usr/src/app
+      - ./services/crawler:/app
     depends_on:
       - mongo
       - backend
 
+  backend:
+    container_name: backend
+    build: ./services/backend
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - FLASK_DEBUG=${FLASK_DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+    ports:
+      - 5000
+    volumes:
+      - ./services/backend:/app
+    depends_on:
+      - mongo
+
   mongo:
+    container_name: mongo
     image: mongo:latest
     environment:
-      - DATABASE_NAME=miabelle
+      - DATABASE_NAME=${DATABASE_NAME}
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
-      - ./mongo:/data/db
+      - mongo_local:/data/db
     ports:
       - 27017
-    command: mongod --smallfiles --logpath=/dev/null 
+    command: mongod --smallfiles --logpath=/dev/null
+
+  mongoclient:
+    container_name: mongoclient
+    image: mongoclient/mongoclient:latest
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000

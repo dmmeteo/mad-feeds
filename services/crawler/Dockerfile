@@ -1,11 +1,12 @@
 FROM python:3
 
-# set working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+ENV PYTHONUNBUFFERED 1
 
 # add app
-COPY . /usr/src/app
+COPY . /app
+
+# set working directory
+WORKDIR /app
 
 # install requirements
 RUN pip install -r requirements.txt

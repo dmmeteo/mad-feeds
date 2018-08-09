@@ -6,9 +6,8 @@ class BaseConfig:
     """Base configuration"""
     SECRET_KEY = os.environ.get("SECRET_KEY")
     TESTING = False
-    # MONGODB_HOST = 'mongo'
-    MONGODB_HOST = '127.0.0.1'
-    MONGODB_PORT = 27017
+    MONGODB_HOST = os.environ.get("DATABASE_HOST")
+    MONGODB_PORT = os.environ.get("DATABASE_PORT")
 
 
 class DevelopmentConfig(BaseConfig):

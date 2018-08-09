@@ -10,6 +10,7 @@ class MiaHTMLSpider(scrapy.Spider):
     def start_requests(self):
         '''Get urls from mongodb'''
         mongo_db = self.settings.get('MONGO_DATABASE')
+        # TODO changot URI to host & port
         mongo_uri = self.settings.get('MONGO_URI')
         client = pymongo.MongoClient(mongo_uri)
         db = client[mongo_db]
