@@ -25,7 +25,6 @@ class MongoPipeline(object):
             host=self.mongo_host,
             port=self.mongo_port
         )
-        # self.client = pymongo.MongoClient(self.mongo_host, self.mongo_port)
         self.db = self.client[self.mongo_db]
 
     def close_spider(self, spider):

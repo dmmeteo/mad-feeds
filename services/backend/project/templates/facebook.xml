@@ -13,7 +13,15 @@
       {% for item in obj %}
          <item>
             {% for key, value in item.items() %}
-                <g:{{ key|e }}>{{ value|e }}</g:{{ key|e}}>
+               {% if key != '_id' %}
+                   <g:{% if key == 'product_id' %}id{% else %}{{ key|e }}{% endif %}>
+                     {% if key|e == 'link' %}
+                        {{ value|e }}?variant={{ item.product_id}}
+                     {% else %}
+                        {{ value|e }}
+                     {% endif %}
+                  </g:{% if key == 'product_id' %}id{% else %}{{ key|e }}{% endif %}>
+               {% endif %}
             {% endfor %}
          </item>
       {% endfor %}
