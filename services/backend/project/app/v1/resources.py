@@ -7,6 +7,7 @@ class FacebookProductFeed(Resource):
 
     def get(self):
         args = self.create_parser().parse_args()
+        # TODO think about mongo indexes
         if args['novariants'] == 'no':
             unique = Product.objects.distinct('link')
             products = []
