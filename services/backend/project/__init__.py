@@ -11,7 +11,8 @@ api = Api(prefix='/api', default_mediatype='application/xml')
 api.representations['application/xml'] = make_rss_response
 db = MongoEngine()
 
-
+# TODO think about shopify api for flask
+# may be it will be easier to create feeds
 def create_app():
     # instantiate the app
     app = Flask(__name__)
